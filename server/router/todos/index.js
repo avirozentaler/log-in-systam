@@ -1,24 +1,33 @@
 const express = require('express');
+const { JSONB } = require('sequelize');
+const { JSON, json } = require('sequelize');
 const routeTodos = express.Router();
 const todosModel = require('../../models/todos');
-
-
 
 console.log(express);
 console.log(routeTodos);
 
 
-routeTodos.get('/',(req,res)=>{
+routeTodos.get('/',async(req,res)=>{
 
     try{
-        const allTodos  =  todosModel.findAll();
+        const allTodos  = await todosModel.findAll();
+        console.log(allTodos);
         res.status(200).send({todos:allTodos});
-    }catch(error){
+    }
+    catch(error){
         console.log(error);
         res.status(500).send('somthing wrong');
     }
 })
 
+ routeTodos.post ('/add-task',async(req,res)=>{
+    const info = req.body;
+
+        console.log ("info");
+        await todosModel.create({id:info.id, task:info.task,isCompleted:info.isCompleted});
+     res.send('success');
+ });
 
 
 module.exports = routeTodos;

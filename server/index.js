@@ -1,16 +1,30 @@
-const  express = require('express');
-const cors = require('cors');
-const router = require('./router');
-const app = express();
-const PORT = 3005;
+require('dotenv').config();
 const myDB = require('./db/mySql');
 
-myDB.sequelize.authenticate().then(()=>{
+const  express = require('express');
+const router = require('./router');
+const cookiePasrser = require('cookie-parser')
+const app = express();
+const PORT = 3005;
+const cors = require('cors');
+
+myDB.authenticate().then(()=>{
   console.log('db-sql is connected');
 }).catch(error=>console.log(error)) 
+// app.use(cors);
 
+app.use(cookiePasrser());
+app.use(cors({
+  origin:["http://localhost:3000"],
+  credentials:true
+}));
 app.use(express.json());
-app.use(cors());
+
+// {
+//   origin:'*', 
+//   credentials:true,            //access-control-allow-credentials:true
+//   optionSuccessStatus:200,
+// }
 app.use(router);
 app.listen(PORT);
 

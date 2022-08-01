@@ -1,4 +1,7 @@
+
+
 const db =  require('../db/mySql');
+const {DataTypes} = require('sequelize');
 
 const todos = db.define('todos', {
     id: {
