@@ -1,0 +1,59 @@
+
+
+
+.myPage {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background-color: #aaaaaa26;
+
+}
+
+.board
+{
+    margin-top: 10vh;
+    width: 100%;
+    max-width: 400px;
+}
+
+.myBoard {
+    background-color: white;
+    border-radius: 10px;
+    justify-content: center;
+    text-align: center;
+    margin: 3%;
+    padding: 10px;
+}
+
+.myDescription
+{
+    color:rgba(30, 143, 255, 0.733);
+}
+
+.myForm {
+    display: flex;
+    flex-flow: column wrap;
+    width: 96%;
+    border-radius: 10px;
+    margin: 2%;
+}
+
+.myForm input {
+    border:ridge;    
+    border-radius: 2px;
+    height: 5vh;
+    margin: 2%;
+}
+
+.myForm :last-child {
+    background-color:rgba(30, 143, 255, 0.257);
+    border: none;
+    margin-top: 5%;
+}
+
+
+.navigateBtn {
+    color:rgba(30, 143, 255, 0.993);
+
+    text-decoration: underline;
+}
