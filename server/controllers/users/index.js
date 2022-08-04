@@ -14,15 +14,16 @@ const register = async (req, res) => {
         console.log(email);
         console.log(password);
 
-        if (!name || !email || !password || !confirmPassword) {
+        if (!(name && email && password && confirmPassword)) {
             res.status(400).send('please fill all the field');
         }
 
         if (password != confirmPassword) {
             res.status(400).send('confirm password wrong');
         }                                                  //validation
-        const hashPass = await bcrypt.hash(password,rounds);
-        await userModel.create({ name, email, password:hashPass});   
+        const hashPass = await bcrypt.hash(password, rounds);
+
+        await userModel.create({ name, email, password: hashPass });
         res.status(200).send({ message: 'user created succefully' });
     }
     catch {
@@ -44,33 +45,32 @@ const logIn = async (req, res) => {
         }
 
         const user = await userModel.findOne({
-            where:{
+            where: {
                 email: email,
-                             
             }
         });
         if (!user) {
-            
-            res.status(500).send('email or password is not taken 1');
-        }
-        const isComparePasword = await bcrypt.compare(password,user.password);   //validation
 
-        if(!isComparePasword){
-            res.status(500).send('email or password is not taken 2(no compare)');
+            res.status(500).send('email or password is not taken');
+        }
+        const isComparePasword = await bcrypt.compare(password, user.password);   //validation
+
+
+        if (!isComparePasword) {
+            res.status(500).send(isComparePasword);
         }
         console.log(isComparePasword);
 
-        const tokenname = 'token'
-        const accessToken = jwt.sign({ name: user.name }, 'myKey', {
+        const accessToken = jwt.sign({id:user.id,email:user.email}, process.env.ACCESS_TOKEN , {
             algorithm: 'HS256',
-            expiresIn: '1h'
+            expiresIn: '1m'
         });
-        console.log(`set cookie  ${accessToken}`)
-console.log('bedore');
 
- 
-        res.cookie(tokenname,accessToken, {
-            maxAge:1000*60*1,
+
+        userModel.update({refresh_token:accessToken},{where:{id:user.id}})  //
+
+        res.cookie(process.env.TOKEN_NAME, accessToken, {
+            maxAge: 1000 * 60 * 1,
             httpOnly: false,
         })
         res.status(200).send(`log in success`);
@@ -85,6 +85,8 @@ console.log('bedore');
         })
     }
 }
+
+
 module.exports = {
     register,
     logIn,

@@ -6,26 +6,22 @@ const { signedCookie } = require("cookie-parser");
 
 
 const authntication = (req, res) => {
+    
 console.log(req.headers.cookie);
         const cook = req.headers.cookie;
         console.log(`my cookie is ${req.headers.cookie}`);
         try {
-
             if(cook){
-            // res.status(200).send(cook);
             res.status(200).send(true);
-
             }
             else{
                 res.status(200).send(false);
             }
-            // res.status(200).send(cook);
         }
         catch {
             ((err) => {
                 console.log(err);
                 res.status(500).send('cookie not found');
-    
             })
         }
 

@@ -1,4 +1,3 @@
-
 module.exports = {
     HOST: process.env.DB_HOST,
     USER: process.env.DB_USER,
@@ -6,4 +5,3 @@ module.exports = {
     DB:process.env.DB_DB,
     DIALECT:process.env.DB_DIALECT,
 }
-

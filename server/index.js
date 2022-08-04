@@ -11,7 +11,6 @@ const cors = require('cors');
 myDB.authenticate().then(()=>{
   console.log('db-sql is connected');
 }).catch(error=>console.log(error)) 
-// app.use(cors);
 
 app.use(cookiePasrser());
 app.use(cors({
@@ -20,11 +19,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// {
-//   origin:'*', 
-//   credentials:true,            //access-control-allow-credentials:true
-//   optionSuccessStatus:200,
-// }
 app.use(router);
 app.listen(PORT);
 
